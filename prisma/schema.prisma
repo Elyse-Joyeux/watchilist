@@ -9,29 +9,54 @@ generator client {
 
 datasource db {
   provider = "mongodb"
+}
 
+enum WatchlistStatus {
+  PLANNED
+  WATCHING
+  COMPLETED
+  DROPED
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  email String @unique
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
   password String
 
-  createdAt DateTime @default(now())
+  createdAt      DateTime        @default(now())
+  watchlistItems WatchlistItem[]
+  createdMovie Movie[] @relation("MovieCreator")
 }
 
-model Movie{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  overview String?
+model Movie {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  overview    String?
   releaseYear Int
-  genres String[] @default([])
-  runtime Int?
-  posterUrl String?
-  createdBy String
-  createdAt DateTime @default(now())
+  genres      String[] @default([])
+  runtime     Int?
+  posterUrl   String?
+  createdBy   String @db.ObjectId
+  createdAt   DateTime @default(now())
 
+  watchlistItems WatchlistItem[]
+  creator User @relation("MovieCreator", fields: [createdBy], references:[id], onDelete: Cascade)
 }
 
 // user-> movie->watchlists
+
+model WatchlistItem {
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String          @db.ObjectId
+  movieId   String          @db.ObjectId
+  status    WatchlistStatus @default(PLANNED)
+  rating    Int?
+  notes     String?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  //relations
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+}

@@ -1,5 +1,7 @@
 import User from '../models/User.js'
 import bcrypt from 'bcryptjs'
+import {generateToken} from '../utils/generateToken.js'
+
 const register = async (req, res)=>{
     const body = req.body;
     const {name, email, password} = req.body;
@@ -18,6 +20,9 @@ const register = async (req, res)=>{
 
     //create user
     const user = await User.create({ name, email, password: hashedPassword})
+
+    //generate jwt token
+    const token = generateToken(user.id)
     res.status(201).json({message: "Success",
         data : {
             user: {
@@ -25,9 +30,36 @@ const register = async (req, res)=>{
                 name: name,
                 email: email,
             }
-        }
+        }, token
         })
     }
 
+const login = async(req, res)=>{
+    const {email, password} = req.body
 
-export {register} 
+    //check if user exists/email
+    const user = await User.findOne({email})
+
+    if(!user){
+        return res.status(400).json({error: "Invalid email or password"})
+    }
+
+    //veify if password is correct
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+    if(!isPasswordValid)
+        return res.status(401).json({error: "Invalid email or password"})
+
+    //generate jwt tokens
+    const token = generateToken(user.id)
+
+    res.status(201).json({message: "Success",
+        data : {
+            user: {
+                id: user.id,
+                email: email,
+            }
+        }, token,
+        })
+}
+
+export {register, login} 

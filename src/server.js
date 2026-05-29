@@ -8,7 +8,7 @@ import authRoutes from './routes/authRoutes.js'
 config()
 connectDB()
 
-const app = express()
+const app = express() 
 
 //body parsing middlewares
 app.use(express.json())

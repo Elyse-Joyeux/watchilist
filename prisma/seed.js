@@ -14,6 +14,7 @@ const movies = [
     genres: ['Action', 'Sci-Fi'],
     runtime: 136,
     posterUrl: 'https://example.com/matrix.jpg',
+    createdBy: creatorId
   },
   {
     title: 'Inception',
@@ -22,6 +23,7 @@ const movies = [
     genres: ['Action', 'Sci-Fi', 'Thriller'],
     runtime: 148,
     posterUrl: 'https://example.com/inception.jpg',
+    createdBy: creatorId
   },
   {
     title: 'The Dark Knight',
@@ -30,6 +32,7 @@ const movies = [
     genres: ['Action', 'Crime', 'Drama'],
     runtime: 152,
     posterUrl: 'https://example.com/darkknight.jpg',
+    createdBy: creatorId
   },
   {
     title: 'Pulp Fiction',
@@ -38,6 +41,7 @@ const movies = [
     genres: ['Crime', 'Drama'],
     runtime: 154,
     posterUrl: 'https://example.com/pulpfiction.jpg',
+    createdBy: creatorId
   },
   {
     title: 'Interstellar',
@@ -46,6 +50,7 @@ const movies = [
     genres: ['Adventure', 'Drama', 'Sci-Fi'],
     runtime: 169,
     posterUrl: 'https://example.com/interstellar.jpg',
+    createdBy: creatorId
   },
   {
     title: 'The Shawshank Redemption',
@@ -54,6 +59,7 @@ const movies = [
     genres: ['Drama'],
     runtime: 142,
     posterUrl: 'https://example.com/shawshank.jpg',
+    createdBy: creatorId
   },
   {
     title: 'Fight Club',
@@ -62,6 +68,7 @@ const movies = [
     genres: ['Drama'],
     runtime: 139,
     posterUrl: 'https://example.com/fightclub.jpg',
+    createdBy: creatorId
   },
   {
     title: 'Forrest Gump',
@@ -70,6 +77,7 @@ const movies = [
     genres: ['Drama', 'Romance'],
     runtime: 142,
     posterUrl: 'https://example.com/forrestgump.jpg',
+    createdBy: creatorId
   },
   {
     title: 'The Godfather',
@@ -78,6 +86,7 @@ const movies = [
     genres: ['Crime', 'Drama'],
     runtime: 175,
     posterUrl: 'https://example.com/godfather.jpg',
+    createdBy: creatorId
   },
   {
     title: 'Goodfellas',
@@ -86,28 +95,32 @@ const movies = [
     genres: ['Biography', 'Crime', 'Drama'],
     runtime: 146,
     posterUrl: 'https://example.com/goodfellas.jpg',
+    createdBy: creatorId
   },
 ]
 
-const main = async()=>{
+const main = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI)
-    console.log("Sedding in process...")
-    
-    await mongoose.deleteMany({})
-    
-    for(const movie of movies){
-      await mongoose.create({
+    console.log('Seeding movies...')
+
+    await Movie.deleteMany({})
+
+    for (const movie of movies) {
+      await Movie.create({
         ...movie,
         createdBy: creatorId
       })
+      console.log(`Created movie: ${movie.title}`)
     }
 
-  }catch(error){
-    console.error("Seeding failed")
+    console.log('Movie seeding completed successfully.')
+  } catch (error) {
+    console.error('Seeding failed:', error)
     process.exit(1)
-  }
-  finally {
+  } finally {
     await mongoose.disconnect()
   }
 }
+
+main()

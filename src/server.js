@@ -1,10 +1,11 @@
 import express from 'express'
 import {config} from 'dotenv'
-import {connectDB} from './config/db.js'
+import {connectDB, disconnectDB} from './config/db.js'
 
 //import routes
 import movieRoutes from './routes/movieRoutes.js'
 import authRoutes from './routes/authRoutes.js'
+import watchlistRoutes from './routes/watchlistRoutes.js'
 config()
 connectDB()
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({extended: true}))
 //API Routes
 app.use("/movies", movieRoutes)
 app.use("/auth", authRoutes)
+app.use("/watchlist", watchlistRoutes)
 
 const PORT = 5001;
 

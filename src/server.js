@@ -20,10 +20,10 @@ app.use("/movies", movieRoutes)
 app.use("/auth", authRoutes)
 app.use("/watchlist", watchlistRoutes)
 
-const PORT = 5001;
 
+const PORT = process.env.PORT || 5001
 const server = app.listen(PORT, ()=>{
-    console.log(`The server is running on port ${PORT}`)
+    console.log(`The server is running on port ${PORT} `)
 })
 
 

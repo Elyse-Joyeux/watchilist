@@ -1,6 +1,11 @@
 import mongoose from 'mongoose'
 
 const movieSchema = new mongoose.Schema({
+  externalId: {
+    type: String,
+    trim: true,
+    index: true
+  },
   title: {
     type: String,
     required: true
@@ -27,5 +32,7 @@ const movieSchema = new mongoose.Schema({
     required: true
   },
 }, { timestamps: true })
+
+movieSchema.index({ title: 1, releaseYear: 1 })
 
 export default mongoose.model('Movie', movieSchema)

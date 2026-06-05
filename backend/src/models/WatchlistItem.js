@@ -6,7 +6,8 @@ const WatchlistSchema = new mongoose.Schema({
         required: true
     },
     movieId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie',
         required: true
     },
     status: {
@@ -21,10 +22,9 @@ const WatchlistSchema = new mongoose.Schema({
     },
     notes: {
         type: String,
-
     }
-
 }, {timestamps: true})
 
+WatchlistSchema.index({ userId: 1, movieId: 1 }, { unique: true });
 
 export default mongoose.model("WatchlistItem", WatchlistSchema)

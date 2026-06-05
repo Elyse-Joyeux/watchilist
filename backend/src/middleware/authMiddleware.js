@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import User from '../models/User.js'
+import { dbState } from '../config/dbState.js'
 
 // read the token from the request
 //check if token is valid
 export const authMiddleware = async(req, res, next) =>{
-    console.log("Auth middleware reached")
     let token;
 
 
@@ -20,7 +20,12 @@ export const authMiddleware = async(req, res, next) =>{
     try{
         //verify if token is valid and extract userId
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await mongoose.user.findOne({id: decoded.id})
+        let user;
+        if (dbState.isMock) {
+            user = dbState.users.find(u => u.id === decoded.id)
+        } else {
+            user = await User.findById(decoded.id)
+        }
 
         if(!user)
             return res.status(401).json({error: "Unauthorized"})

@@ -1,0 +1,132 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 28px;
+  background: rgba(11, 13, 18, 0.82);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.brandMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.brandName {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.brandName span {
+  color: var(--accent);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+
+.navLink:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.navLinkActive {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.accountLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 8px 3px 3px;
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+  transition: background 0.14s ease;
+}
+
+.accountLink:hover,
+.accountLinkActive {
+  background: var(--surface);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .navLink span,
+  .userName {
+    display: none;
+  }
+
+  .accountLink {
+    padding-right: 3px;
+  }
+}

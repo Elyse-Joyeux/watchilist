@@ -1,0 +1,36 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 24px;
+  gap: 14px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.text {
+  margin: 0;
+  max-width: 360px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}

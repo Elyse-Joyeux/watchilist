@@ -279,6 +279,51 @@ export function UserIcon({
   );
 }
 
+/** Eye — show password. */
+export function EyeIcon({
+  size = 20,
+  color = "currentColor",
+  className,
+}: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <path
+        d="M3.5 12s3-5.5 8.5-5.5S20.5 12 20.5 12s-3 5.5-8.5 5.5S3.5 12 3.5 12z"
+        stroke={color}
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <circle cx="12" cy="12" r="2.7" stroke={color} strokeWidth="1.7" />
+    </svg>
+  );
+}
+
+/** Slashed eye — hide password. */
+export function EyeOffIcon({
+  size = 20,
+  color = "currentColor",
+  className,
+}: IconProps) {
+  return (
+    <svg {...base(size)} className={className}>
+      <path
+        d="M3.5 12s3-5.5 8.5-5.5c1.4 0 2.7.35 3.8.88M20.5 12s-3 5.5-8.5 5.5c-1.38 0-2.64-.34-3.73-.86"
+        stroke={color}
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5 5l14 14M10.4 10.3A2.7 2.7 0 0012 14.7c.65 0 1.25-.23 1.72-.62"
+        stroke={color}
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /** Logout — exit door. */
 export function LogoutIcon({
   size = 20,

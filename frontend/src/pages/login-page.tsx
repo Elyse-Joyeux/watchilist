@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { FilmIcon } from "../icons.js";
+import { EyeIcon, EyeOffIcon, FilmIcon } from "../icons.js";
 import { Button } from "../components/button.js";
 import styles from "./login-page.module.css";
 import type { UseAuth } from "../use-auth.js";
@@ -18,6 +18,7 @@ export function LoginPage({ auth }: LoginPageProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("elyse@watchlist.app");
   const [password, setPassword] = useState("password");
+  const [showPassword, setShowPassword] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
@@ -57,12 +58,10 @@ export function LoginPage({ auth }: LoginPageProps) {
       >
         <div className={styles.posterOverlay} />
         <div className={styles.posterContent}>
-          <p className={styles.quote}>
-            "Every great film deserves a place on your list."
-          </p>
+          <p className={styles.quote}>A quiet place for the films you keep meaning to watch.</p>
           <p className={styles.quoteSub}>
-            Keep track of what you want to watch, what you're watching, and what
-            blew you away.
+            Save the next one, rate the last one, and leave yourself a note
+            before you forget why it mattered.
           </p>
         </div>
       </div>
@@ -79,12 +78,12 @@ export function LoginPage({ auth }: LoginPageProps) {
           </div>
 
           <h1 className={styles.title}>
-            {mode === "login" ? "Welcome back" : "Create your account"}
+            {mode === "login" ? "Sign in" : "Start a list"}
           </h1>
           <p className={styles.subtitle}>
             {mode === "login"
-              ? "Sign in to access your watchlist."
-              : "Start tracking the movies you love."}
+              ? "Pick up where you left off."
+              : "A name, an email, and you're in."}
           </p>
 
           <div className={styles.tabs}>
@@ -145,14 +144,28 @@ export function LoginPage({ auth }: LoginPageProps) {
 
           <div className={styles.field}>
             <label className={styles.label}>Password</label>
-            <input
-              className={styles.input}
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-            />
+            <div className={styles.passwordWrap}>
+              <input
+                className={`${styles.input} ${styles.passwordInput}`}
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+              <button
+                className={styles.eyeButton}
+                type="button"
+                onClick={() => setShowPassword((value) => !value)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <EyeOffIcon size={18} color="currentColor" />
+                ) : (
+                  <EyeIcon size={18} color="currentColor" />
+                )}
+              </button>
+            </div>
           </div>
 
           <Button type="submit" variant="primary" className={styles.submit} disabled={auth.loading}>
@@ -160,7 +173,7 @@ export function LoginPage({ auth }: LoginPageProps) {
           </Button>
 
           <p className={styles.hint}>
-            Your movies, ratings, notes, and settings stay with your account.
+            We keep your list separate from everyone else's.
           </p>
         </form>
       </div>
